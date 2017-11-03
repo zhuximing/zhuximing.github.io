@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>solor单机版服务安装 | 问道学院博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前提:搭建java运行环境（solor是java写的） 请参考centos搭建java环境 1.将下载solr-4.10.3.tgz和apache-tomcat-7.0.47.tar.gz上传到linux服务器中  2:解压tomcat到/usr/local/solr/ mkdir /usr/local/solr -p [root@localhost uploadFile]# tar -zxvf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solor单机版服务安装">
+<meta property="og:url" content="http://www.wendaoxueyuan.com/2017/07/28/solor-e6-9c-8d-e5-8a-a1-e7-9a-84-e5-ae-89-e8-a3-85/index.html">
+<meta property="og:site_name" content="问道学院博客">
+<meta property="og:description" content="前提:搭建java运行环境（solor是java写的） 请参考centos搭建java环境 1.将下载solr-4.10.3.tgz和apache-tomcat-7.0.47.tar.gz上传到linux服务器中  2:解压tomcat到/usr/local/solr/ mkdir /usr/local/solr -p [root@localhost uploadFile]# tar -zxvf">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/sdf-1-300x216.jpg">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-28_105857-300x56.png">
+<meta property="og:updated_time" content="2017-11-03T16:56:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="solor单机版服务安装">
+<meta name="twitter:description" content="前提:搭建java运行环境（solor是java写的） 请参考centos搭建java环境 1.将下载solr-4.10.3.tgz和apache-tomcat-7.0.47.tar.gz上传到linux服务器中  2:解压tomcat到/usr/local/solr/ mkdir /usr/local/solr -p [root@localhost uploadFile]# tar -zxvf">
+<meta name="twitter:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/sdf-1-300x216.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="问道学院博客" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">问道学院博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">LINUX</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">LINUX</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">朱锡铭</h2>
+            <h3 id="title">问道学院创始人,专注it技术一辈子</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>武汉，中国</span>
+            <a id="follow" target="_blank" href="https://github.com/zhuximing">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                34
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhuximing" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-solor-e6-9c-8d-e5-8a-a1-e7-9a-84-e5-ae-89-e8-a3-85" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            solor单机版服务安装
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/28/solor-e6-9c-8d-e5-8a-a1-e7-9a-84-e5-ae-89-e8-a3-85/">
+            <time datetime="2017-07-28T01:45:33.000Z" itemprop="datePublished">2017-07-28</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/solor/">solor</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>前提:搭建java运行环境（solor是java写的）</p>
+<p>请参考<a href="http://139.199.74.187/blog/?p=36" target="_blank" rel="external">centos搭建java环境</a></p>
+<p>1.将下载solr-4.10.3.tgz和apache-tomcat-7.0.47.tar.gz上传到linux服务器中</p>
+<p><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/sdf-1-300x216.jpg" alt=""></p>
+<p>2:解压tomcat到/usr/local/solr/</p>
+<p><pre>mkdir /usr/local/solr -p</pre></p>
+<p>[root@localhost uploadFile]# tar -zxvf apache-tomcat-7.0.47.tar.gz -C /usr/local/solr<br>3:解压solr到/usr/local/solr</p>
+<p><pre>[root@localhost uploadFile]# tar -zxvf solr-4.10.3.tgz.tgz -C /usr/local/solr</pre><br>4：将solr   dist文件夹下面的solr-4.10.3.war  移动到tomcat的webapps下面并改为solr.war</p>
+<p><pre>cp /usr/local/solr/solr-4.10.3/dist/solr-4.10.3.war /usr/local/solr/apache-tomcat-7.0.47/webapps/solr.war</pre><br>5：启动tomcat，为的是解压solr.war,后续要往这个文件夹加东西</p>
+<p><pre>[root@localhost bin]# ./startup.sh</pre><br>6:将/usr/local/solr/solr-4.10.3/example/lib/ext目录下所有的jar拷贝到</p>
+<p><pre>[root@localhost ext]# cp * /usr/local/solr/apache-tomcat-7.0.47/webapps/solr/WEB-INF/lib/</pre><br>7:将/usr/local/solr/solr-4.10.3/example/solr拷贝到/usr/local/solr 改名为solr_home</p>
+<p><pre>[root@localhost example]# cp solr -r /usr/local/solr/solr_home  <span style="color: #ff0000;"> -r是将solr的内容追加到solr_home</span></pre><br>8：将tomcat solr项目和solr_home关联到一起</p>
+<p><pre>vim /usr/local/solr/apache-tomcat-7.0.47/webapps/solr/WEB-INF/web.xml </pre></p>
+<p><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-28_105857-300x56.png" alt=""><br>9:重启tomcat</p>
+<p>10:<a href="http://192.168.25.130:8080/solr" target="_blank" rel="external">http://192.168.25.130:8080/solr</a></p>
+<p><pre><span style="color: #ff0000;">注意：关闭防火墙</span><br>chkconfig iptables off<br>或者<br>开放8080端口</pre><br>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/07/28/solor-e6-9c-8d-e5-8a-a1-e7-9a-84-e5-ae-89-e8-a3-85/" data-id="cj9k57bjw001fyc8v9vrvjrvn" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/07/28/solr-e6-b7-bb-e5-8a-a0-e4-b8-ad-e6-96-87-e5-88-86-e6-9e-90-e5-99-a8/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    solr添加中文分析器
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/07/27/redis-e9-9b-86-e7-be-a4-e4-b9-8bcluster-config-file-e9-85-8d-e7-bd-ae-e9-97-ae-e9-a2-98/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Redis集群之cluster-config-file配置问题</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/">JAVA_WEB</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJs/">NodeJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/未分类/">未分类</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/">dubbo</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/">fastDFS</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/solor/">solor</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端技术/">前端技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务安装/">服务安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.wendaoxueyuan.com">问道学院</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 朱锡铭<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

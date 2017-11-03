@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>WebStorageCache--api | 问道学院博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="说明:   WebStorageCache对HTML5 localStorage和sessionStorage 进行了扩展，添加了超时时间，序列化方法。可以直接存储json对象，同时可以非常简单的进行超时时间的设置。 优化：WebStorageCache自动清除访问的过期数据，避免了过期数据的累积。另外也提供了清除全部过期数据的方法：wsCache.deleteAllExpires(); 资源下载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebStorageCache--api">
+<meta property="og:url" content="http://www.wendaoxueyuan.com/2017/08/06/webstoragecache-api/index.html">
+<meta property="og:site_name" content="问道学院博客">
+<meta property="og:description" content="说明:   WebStorageCache对HTML5 localStorage和sessionStorage 进行了扩展，添加了超时时间，序列化方法。可以直接存储json对象，同时可以非常简单的进行超时时间的设置。 优化：WebStorageCache自动清除访问的过期数据，避免了过期数据的累积。另外也提供了清除全部过期数据的方法：wsCache.deleteAllExpires(); 资源下载">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-03T16:56:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebStorageCache--api">
+<meta name="twitter:description" content="说明:   WebStorageCache对HTML5 localStorage和sessionStorage 进行了扩展，添加了超时时间，序列化方法。可以直接存储json对象，同时可以非常简单的进行超时时间的设置。 优化：WebStorageCache自动清除访问的过期数据，避免了过期数据的累积。另外也提供了清除全部过期数据的方法：wsCache.deleteAllExpires(); 资源下载">
+    
+
+    
+        <link rel="alternate" href="/" title="问道学院博客" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">问道学院博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">LINUX</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">LINUX</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">朱锡铭</h2>
+            <h3 id="title">问道学院创始人,专注it技术一辈子</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>武汉，中国</span>
+            <a id="follow" target="_blank" href="https://github.com/zhuximing">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                34
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhuximing" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-webstoragecache-api" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            WebStorageCache--api
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/08/06/webstoragecache-api/">
+            <time datetime="2017-08-06T05:45:46.000Z" itemprop="datePublished">2017-08-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><pre>说明:<br>   WebStorageCache对HTML5 localStorage和sessionStorage 进行了扩展，添加了超时时间，序列化方法。可以直接存储json对象，同时可以非常简单的进行超时时间的设置。<br> <strong>优化</strong>：WebStorageCache自动清除访问的过期数据，避免了过期数据的累积。另外也提供了清除全部过期数据的方法：wsCache.deleteAllExpires();</pre></p>
+<p><pre>资源下载和使用方法请参考：<a href="https://github.com/WQTeam/web-storage-cache" target="_blank" rel="external">https://github.com/WQTeam/web-storage-cache</a></pre><br>&nbsp;</p>
+<p>使用WebStorageCache，只要在页面上引入下面代码即可。</p>
+<div class="highlight highlight-text-html-basic"><br><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">“</span>src/web-storage-cache.js<span class="pl-pds">“</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;<br><br>&lt;<span class="pl-ent">script</span>&gt;<br><span class="pl-s1"><span class="pl-c">// 创建WebStorageCache 实例.</span></span><br><span class="pl-s1"><span class="pl-k">var</span> wsCache <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStorageCache</span>();</span><br><span class="pl-s1"><span class="pl-c">// 保存’wqteam’ 到 ‘username’, 过期时间 100 秒</span></span><br><span class="pl-s1"><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">100</span>});</span><br><span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;</pre><br></div>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><div class="highlight highlight-source-js"><br><pre><span class="pl-k">var</span> wsCache <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStorageCache</span>();<br><br><span class="pl-c">// 缓存字符串’wqteam’ 到 ‘username’ 中, 超时时间100秒</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">100</span>});<br><br><span class="pl-c">// 超时截止日期，可用使用Date类型</span><br><span class="pl-k">var</span> nextYear <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>();<br><span class="pl-smi">nextYear</span>.<span class="pl-c1">setFullYear</span>(<span class="pl-smi">nextYear</span>.<span class="pl-c1">getFullYear</span>() <span class="pl-k">+</span> <span class="pl-c1">1</span>);<br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> nextYear});<br><br><span class="pl-c">// 获取缓存中 ‘username’ 的值</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>);<br><br><span class="pl-c">// 缓存简单js对象，默认使用序列化方法为JSON.stringify。可以通过初始化wsCache的时候配置serializer.serialize</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>user<span class="pl-pds">‘</span></span>, { name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">‘</span>Wu<span class="pl-pds">‘</span></span>, organization<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>});<br><br><span class="pl-c">// 读取缓存中的简单js对象 - 默认使用反序列化方法为JSON.parse。可以通过初始化wsCache的时候配置serializer.deserialize</span><br><span class="pl-k">var</span> user <span class="pl-k">=</span> <span class="pl-smi">wsCache</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">‘</span>user<span class="pl-pds">‘</span></span>);<br><span class="pl-en">alert</span>(<span class="pl-smi">user</span>.<span class="pl-c1">name</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">‘</span> belongs to <span class="pl-pds">‘</span></span> <span class="pl-k">+</span> <span class="pl-smi">user</span>.<span class="pl-smi">organization</span>);<br><br><span class="pl-c">// 删除缓存中 ‘username’</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">delete</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>);<br><br><span class="pl-c">// 手工删除所有超时CacheItem,</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">deleteAllExpires</span>();<br><br><span class="pl-c">// 清除客户端中所有缓存</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">clear</span>();<br><br><span class="pl-c">// 为已存在的（未超时的）缓存值设置新的超时时间。</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">touch</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-c1">1</span>);<br><br><span class="pl-c">// 如果缓存中没有key为username2的缓存，则添加username2。反之什么都不做</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">add</span>(<span class="pl-s"><span class="pl-pds">‘</span>username2<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">1</span>});<br><br><span class="pl-c">// 如果缓存中有key为username的缓存，则替换为新值。反之什么都不做</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">replace</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>new wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">1</span>});<br><br><span class="pl-c">// 检查当前选择作为缓存的storage是否被用户浏览器支持。</span><br><span class="pl-c">//如果不支持调用WebStorageCache API提供的方法将什么都不做。</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">isSupported</span>();<br></pre><br></div>
+
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a><a href="https://github.com/WQTeam/web-storage-cache#api" target="_blank" rel="external"></a>API</h1><h2 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a><a href="https://github.com/WQTeam/web-storage-cache#constructor" target="_blank" rel="external"></a>Constructor</h2><div class="highlight highlight-source-js"><br><pre><span class="pl-k">var</span> wsCache <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStorageCache</span>({<br>    <span class="pl-c">// [可选] ‘localStorage’, ‘sessionStorage’, window.localStorage, window.sessionStorage</span><br>    <span class="pl-c">//        或者其他实现了 [Storage API] 的storage实例.</span><br>    <span class="pl-c">//        默认 ‘localStorage’.</span><br>    storage<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">‘</span>localStorage<span class="pl-pds">‘</span></span>,<br>    <span class="pl-c">// [可选]  类型Number，公共超时事件设置。默认无限大</span><br>    exp<span class="pl-k">:</span> <span class="pl-c1">Infinity</span><br>});</pre><br></div>
+
+<h2 id="isSupported"><a href="#isSupported" class="headerlink" title="isSupported"></a><a href="https://github.com/WQTeam/web-storage-cache#issupported" target="_blank" rel="external"></a>isSupported</h2><p>检查当前选择作为缓存的storage是否被用户浏览器支持。 如果不支持调用WebStorageCache API提供的方法将什么都不做。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-en">isSupported</span>(); <span class="pl-c">// 返回值Boolean。</span></pre><br></div>
+
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a><a href="https://github.com/WQTeam/web-storage-cache#set" target="_blank" rel="external"></a>set</h2><p>往缓存中插入数据。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-c">// key [必填] 必须要为String类型。</span><br><span class="pl-c">// value [必填] 支持所以可以JSON.parse 的类型。注：当为undefined的时候会执行 delete(key)操作。</span><br><span class="pl-c">// options [选填] js对象，包含两个属性 exp 和 force。</span><br><span class="pl-c">// {</span><br><span class="pl-c">//     // 类型Number。超时时间，秒。默认无限大。</span><br><span class="pl-c">//     exp: 100,</span><br><span class="pl-c">//     // 类型Boolean。为true时：当超过最大容量导致无法继续插入数据操作时，先清空缓存中已超时的</span><br><span class="pl-c">//     // 内容后再尝试插入数据操作。默认为true。</span><br><span class="pl-c">//     force: true</span><br><span class="pl-c">// }</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(key, value, options);</pre><br></div>
+
+<h2 id="get"><a href="#get" class="headerlink" title="get"></a><a href="https://github.com/WQTeam/web-storage-cache#get" target="_blank" rel="external"></a>get</h2><p>根据key获取缓存中未超时数据。返回相应类型String、Boolean、PlainObject、Array的值。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-c">// key [必填] String类型。如果发现该key对应的值已过期,会进行delete(key)操作，返回null。</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">get</span>(key);</pre><br></div>
+
+<h2 id="delete"><a href="#delete" class="headerlink" title="delete"></a><a href="https://github.com/WQTeam/web-storage-cache#delete" target="_blank" rel="external"></a>delete</h2><p>根据key删除缓存中的值。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">delete</span>(key);</pre><br></div>
+
+<h2 id="deleteAllExpires"><a href="#deleteAllExpires" class="headerlink" title="deleteAllExpires"></a><a href="https://github.com/WQTeam/web-storage-cache#deleteallexpires" target="_blank" rel="external"></a>deleteAllExpires</h2><p>删除缓存中所有通过WebStorageCache存储的超时值。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-en">deleteAllExpires</span>();</pre><br></div>
+
+<h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a><a href="https://github.com/WQTeam/web-storage-cache#clear" target="_blank" rel="external"></a>clear</h2><p>清空缓存中全部的值。注意：这个方法会清除不是使用WebStorageCache插入的值。推荐使用:<code>deleteAllExpires</code>。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">clear</span>();</pre><br></div>
+
+<h2 id="touch"><a href="#touch" class="headerlink" title="touch"></a><a href="https://github.com/WQTeam/web-storage-cache#touch" target="_blank" rel="external"></a>touch</h2><p>根据key为已存在的（未超时的）缓存值以当前时间为基准设置新的超时时间。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-c">// key [必填] String类型</span><br><span class="pl-c">// exp [必填] number 单位：秒 js对象包含exp属性（以当前时间为起点的新的超时时间）</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">touch</span>(key, exp<span class="pl-k">:</span> <span class="pl-c1">1</span>);</pre><br></div>
+
+<h2 id="add"><a href="#add" class="headerlink" title="add"></a><a href="https://github.com/WQTeam/web-storage-cache#add" target="_blank" rel="external"></a>add</h2><p>根据key做插入操作，如果key对应的值不存在或者已超时则插入该值，反之什么都不做。 注：不是通过WebStorageCache插入的值也会当作失效的值，依然执行<code>add</code>操作</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">add</span>(key, value, options);</pre><br></div>
+
+<h2 id="replace"><a href="#replace" class="headerlink" title="replace"></a><a href="https://github.com/WQTeam/web-storage-cache#replace" target="_blank" rel="external"></a>replace</h2><p>根据key做插入操作，如果key对应的值存在并且未超时则插入该值，反之什么都不做<br>注：超时时间以当前时间为基准重新设置。</p>
+<p><div class="highlight highlight-source-js"></div></p>
+<p><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">replace</span>(key, value, options);</pre><br><br>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/08/06/webstoragecache-api/" data-id="cj9k57bkc001ryc8vdmkwweaq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/11/03/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Hello World
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/08/03/dubbo-e6-9c-8d-e5-8a-a1-e6-80-8e-e4-b9-88-e8-bf-90-e8-a1-8c-e8-ae-a8-e8-ae-ba/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Dubbo服务怎么运行--讨论</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/">JAVA_WEB</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJs/">NodeJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/未分类/">未分类</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/">dubbo</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/">fastDFS</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/solor/">solor</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端技术/">前端技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务安装/">服务安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.wendaoxueyuan.com">问道学院</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 朱锡铭<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

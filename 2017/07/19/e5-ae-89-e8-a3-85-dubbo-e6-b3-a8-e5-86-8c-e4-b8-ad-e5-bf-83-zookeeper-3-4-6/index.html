@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>zookeeper-单机版 | 问道学院博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="安装 Dubbo 注册中心(Zookeeper-3.4.6) 1:安装虚拟机(无界面启动 vim /etc/inittab  将5改成3)如果想切换到有界面 输入命令startx2：安装centos6.6系统3:SecurCRT8.x(远程连接虚拟机的客户端)dubbo建议使用zookeeper作为服务的注册中心   前提：centos需要搭建java环境（zookeeper本身是java程序）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper-单机版">
+<meta property="og:url" content="http://www.wendaoxueyuan.com/2017/07/19/e5-ae-89-e8-a3-85-dubbo-e6-b3-a8-e5-86-8c-e4-b8-ad-e5-bf-83-zookeeper-3-4-6/index.html">
+<meta property="og:site_name" content="问道学院博客">
+<meta property="og:description" content="安装 Dubbo 注册中心(Zookeeper-3.4.6) 1:安装虚拟机(无界面启动 vim /etc/inittab  将5改成3)如果想切换到有界面 输入命令startx2：安装centos6.6系统3:SecurCRT8.x(远程连接虚拟机的客户端)dubbo建议使用zookeeper作为服务的注册中心   前提：centos需要搭建java环境（zookeeper本身是java程序）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-03T16:56:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zookeeper-单机版">
+<meta name="twitter:description" content="安装 Dubbo 注册中心(Zookeeper-3.4.6) 1:安装虚拟机(无界面启动 vim /etc/inittab  将5改成3)如果想切换到有界面 输入命令startx2：安装centos6.6系统3:SecurCRT8.x(远程连接虚拟机的客户端)dubbo建议使用zookeeper作为服务的注册中心   前提：centos需要搭建java环境（zookeeper本身是java程序）">
+    
+
+    
+        <link rel="alternate" href="/" title="问道学院博客" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">问道学院博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">LINUX</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">LINUX</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">朱锡铭</h2>
+            <h3 id="title">问道学院创始人,专注it技术一辈子</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>武汉，中国</span>
+            <a id="follow" target="_blank" href="https://github.com/zhuximing">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                34
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhuximing" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-e5-ae-89-e8-a3-85-dubbo-e6-b3-a8-e5-86-8c-e4-b8-ad-e5-bf-83-zookeeper-3-4-6" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            zookeeper-单机版
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/19/e5-ae-89-e8-a3-85-dubbo-e6-b3-a8-e5-86-8c-e4-b8-ad-e5-bf-83-zookeeper-3-4-6/">
+            <time datetime="2017-07-19T09:28:58.000Z" itemprop="datePublished">2017-07-19</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/dubbo/">dubbo</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/dubbo/未分类/">未分类</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <div></div><br><div><br><br><strong> 安装 Dubbo 注册中心(Zookeeper-3.4.6) </strong><br><br><pre>1:安装虚拟机(无界面启动 vim /etc/inittab  将5改成3)如果想切换到有界面 输入命令startx<br>2：安装centos6.6系统<br>3:SecurCRT8.x(远程连接虚拟机的客户端)</pre><br></div><br><div><br><pre>dubbo建议使用zookeeper作为服务的注册中心<br></pre><br></div>
+
+<ul>
+<li><p>前提：centos需要搭建java环境（zookeeper本身是java程序）</p>
+<pre>参考[centos搭建java环境
+](http://139.199.74.187/blog/?p=36)</pre>
+</li>
+<li><p>1:下载zookeeper-3.4.6<br><pre>方法一(需要连网)：<br><strong>a&gt;</strong>:wget <a href="http://www-eu.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz" target="_blank" rel="external">http://www-eu.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz</a> </pre></p>
+</li>
+</ul>
+<p>方法二：<br><strong>a&gt;</strong>:先下载到本地机器，下载地址：<a href="http://www-eu.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz" target="_blank" rel="external">http://www-eu.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz</a><br><strong>b&gt;</strong>:使用secureCRT自带上传工具 打开secureCRT按住快捷键alt+p ,将压缩包拖到secureCRT</p>
+<p><strong><span style="color: #ff0000;">注意</span></strong>：最好用root用户登录，然后上传，这时候一般上传到root用户的家目录即/root目录下<br>3:解压zookeeper安装包到/user/local目录下</p>
+<pre>1&gt;:tar -zxvf zookeeper-3.4.6.tar.gz <span style="color: #ff0000;">-C</span> /usr/local
+2&gt;修改zookeeper文件夹名字为zookeeper-alone(后面还要搭建集群版)
+   cd /usr/local
+   mv zookeeper-3.4.6 zookeeper-alone(该文件夹名字)</pre>
+
+<ul>
+<li><p>4:在zookeeper-alone目录下创建以下目录</p>
+<pre>cd /usr/local/zookeeper-alone/
+mkdir data(创建data文件夹)
+mkdir logs（创建logs文件夹,可以忽略）</pre>
+</li>
+<li><p>5:将 zookeeper-alone/conf 目录下的 zoo_sample.cfg 文件拷贝一份，命名为为 zoo.cfg</p>
+<pre>cd /usr/local/zookeeper-alone/conf
+cp zoo_sample.cfg  zoo.cfg(拷贝)</pre>
+</li>
+<li><p>6:修改zoo.cfg配置文件</p>
+<pre>vim zoo.cfg
+在#example sakes这行注释下面加上以下代码
+dataDir=/usr/local/zookeeper-alone/data
+dataLogDir=/usr/local/zookeeper-alone/logs(忽略)
+<span style="color: #ff0000;">注意</span>：路径一定不要错了</pre>
+</li>
+<li><p>7:启动zookeeper</p>
+<pre>1&gt;切换到zookeeper的bin目录
+cd /usr/local/zookeeper-alone/bin  <span style="color: #ff0000;"> 
+<span style="color: #000000;">2&gt;./zkServer.sh start               启动zookeeper
+3&gt;./zkServer.sh status              查看zookeeper状态
+4&gt;./zkServer.sh stop                关闭zookeeper</span></span></pre>
+</li>
+<li><p>8:开放2181 端口（如果你觉着麻烦，干脆关闭防火墙也可，关闭防火墙的命令）<br>关闭防火墙（建议）<br><pre>/etc/init.d/iptables stop<br>chkconfig  iptables off</pre><br>开放端口(如果做了上一步骤，本步可以忽略,但是在生产环境必须做这一步骤)<br><pre>切换到 root 用户权限，执行以下命令：</pre></p>
+<h1 id="chkconfig-iptables-on-设置防火墙开机启动"><a href="#chkconfig-iptables-on-设置防火墙开机启动" class="headerlink" title="chkconfig iptables on 设置防火墙开机启动"></a>chkconfig iptables on 设置防火墙开机启动</h1><h1 id="service-iptables-start-启动防火墙服务"><a href="#service-iptables-start-启动防火墙服务" class="headerlink" title="service iptables start  启动防火墙服务"></a>service iptables start  启动防火墙服务</h1><p>编辑/etc/sysconfig/iptables</p>
+<h1 id="vi-etc-sysconfig-iptables"><a href="#vi-etc-sysconfig-iptables" class="headerlink" title="vi /etc/sysconfig/iptables"></a>vi /etc/sysconfig/iptables</h1><p>增加以下 1 行：<br>-A INPUT -m state –state NEW -m tcp -p tcp –dport 2181 -j ACCEPT<br>重启防火墙：</p>
+<h1 id="service-iptables-restart"><a href="#service-iptables-restart" class="headerlink" title="service iptables restart"></a>service iptables restart</h1><p>查看防火墙端口状态：</p>
+<h1 id="service-iptables-status"><a href="#service-iptables-status" class="headerlink" title="service iptables status"></a>service iptables status</h1><p>&nbsp;</p>
+</li>
+</ul>
+<p>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/07/19/e5-ae-89-e8-a3-85-dubbo-e6-b3-a8-e5-86-8c-e4-b8-ad-e5-bf-83-zookeeper-3-4-6/" data-id="cj9k57bia000oyc8v0lcc1m28" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/07/25/fastdfs-e7-ae-80-e4-bb-8b/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    fastDFS简介
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/07/05/java-e6-b3-a8-e8-a7-a3/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">java注解</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/">JAVA_WEB</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJs/">NodeJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/未分类/">未分类</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/">dubbo</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/">fastDFS</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/solor/">solor</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端技术/">前端技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务安装/">服务安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.wendaoxueyuan.com">问道学院</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 朱锡铭<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

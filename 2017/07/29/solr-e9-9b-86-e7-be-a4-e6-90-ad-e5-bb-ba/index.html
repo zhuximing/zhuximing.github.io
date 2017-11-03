@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>solr集群搭建 | 问道学院博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="说明： 1：之前搭建过单机版的solr，现在搭建集群版，我选择共用一个虚拟机，同时可以直接拷贝之前运行solr的tomcat，这样可以免去一些配置，如果你还不会单机版solr搭建请参考[solr单机版服务安装](http://139.199.74.187/blog/?p=190) 2：  1：拷贝四份tomcat  mkdir /usr/local/solr-cloud cp -r /usr/lo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solr集群搭建">
+<meta property="og:url" content="http://www.wendaoxueyuan.com/2017/07/29/solr-e9-9b-86-e7-be-a4-e6-90-ad-e5-bb-ba/index.html">
+<meta property="og:site_name" content="问道学院博客">
+<meta property="og:description" content="说明： 1：之前搭建过单机版的solr，现在搭建集群版，我选择共用一个虚拟机，同时可以直接拷贝之前运行solr的tomcat，这样可以免去一些配置，如果你还不会单机版solr搭建请参考[solr单机版服务安装](http://139.199.74.187/blog/?p=190) 2：  1：拷贝四份tomcat  mkdir /usr/local/solr-cloud cp -r /usr/lo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/AA-300x83.jpg">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/dd-300x145.png">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-30_095506-300x58.png">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-30_095654-300x59.png">
+<meta property="og:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-30_100739-300x202.png">
+<meta property="og:updated_time" content="2017-11-03T16:56:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="solr集群搭建">
+<meta name="twitter:description" content="说明： 1：之前搭建过单机版的solr，现在搭建集群版，我选择共用一个虚拟机，同时可以直接拷贝之前运行solr的tomcat，这样可以免去一些配置，如果你还不会单机版solr搭建请参考[solr单机版服务安装](http://139.199.74.187/blog/?p=190) 2：  1：拷贝四份tomcat  mkdir /usr/local/solr-cloud cp -r /usr/lo">
+<meta name="twitter:image" content="http://139.199.74.187/blog/wp-content/uploads/2017/07/AA-300x83.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="问道学院博客" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">问道学院博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">LINUX</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">LINUX</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">朱锡铭</h2>
+            <h3 id="title">问道学院创始人,专注it技术一辈子</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>武汉，中国</span>
+            <a id="follow" target="_blank" href="https://github.com/zhuximing">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                34
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                0
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/zhuximing" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-solr-e9-9b-86-e7-be-a4-e6-90-ad-e5-bb-ba" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            solr集群搭建
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/29/solr-e9-9b-86-e7-be-a4-e6-90-ad-e5-bb-ba/">
+            <time datetime="2017-07-29T15:46:22.000Z" itemprop="datePublished">2017-07-29</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/solor/">solor</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <pre>说明：
+1：之前搭建过单机版的solr，现在搭建集群版，我选择共用一个虚拟机，同时可以直接拷贝之前运行solr的tomcat，这样可以免去一些配置，如果你还不会单机版solr搭建请参考[solr单机版服务安装](http://139.199.74.187/blog/?p=190)
+2：</pre>
+
+<p>1：拷贝四份tomcat</p>
+<p><pre> mkdir /usr/local/solr-cloud<br> cp -r /usr/local/solr/apache-tomcat-7.0.47/ /usr/local/solr-cloud/tomcat01<br> cp -r /usr/local/solr/apache-tomcat-7.0.47/ /usr/local/solr-cloud/tomcat02<br> cp -r /usr/local/solr/apache-tomcat-7.0.47/ /usr/local/solr-cloud/tomcat03<br> cp -r /usr/local/solr/apache-tomcat-7.0.47/ /usr/local/solr-cloud/tomcat04</pre><br>2:由于是伪集群，所以需要改tomcat端口</p>
+<p><pre>vim /usr/local/solr-cloud/tomcat01/conf/server.xml<br>&lt;Server port=”8005” shutdown=”SHUTDOWN”&gt;     <span style="color: #00ff00;"> 改成8105</span><br>&lt;Connector port=”8080” protocol=”HTTP/1.1”   <span style="color: #00ff00;"> 改成8180</span><br>&lt;Connector port=”8009” protocol=”AJP/1.3” redirectPort=”8443” /&gt; <span style="color: #00ff00;">改成8109</span><br>还有三个tomcat，同理去改，保证不一样就行</pre><br>3：拷贝四份solr_home</p>
+<p><pre> cp -r /usr/local/solr/solr_home/ /usr/local/solr-cloud/solr_home01<br>  cp -r /usr/local/solr/solr_home/ /usr/local/solr-cloud/solr_home02<br>  cp -r /usr/local/solr/solr_home/ /usr/local/solr-cloud/solr_home03<br>  cp -r /usr/local/solr/solr_home/ /usr/local/solr-cloud/solr_home04</pre><br>4:修改solr_home 下面的solr.xml</p>
+<p><pre>&lt;solrcloud&gt;<br> &lt;str name=”host”&gt;<span style="color: #ff0000;"><strong>192.168.25.130</strong></span>&lt;/str&gt;<br> &lt;int name=”hostPort”&gt;<strong><span style="color: #ff0000;">8180</span></strong>&lt;/int&gt;<br> &lt;str name=”hostContext”&gt;${hostContext:solr}&lt;/str&gt;<br> &lt;int name=”zkClientTimeout”&gt;${zkClientTimeout:30000}&lt;/int&gt;<br> &lt;bool name=”genericCoreNodeNames”&gt;${genericCoreNodeNames:true}&lt;/bool&gt;<br> &lt;/solrcloud&gt;<br>标红为当前solr_home 所处服务器的ip和对应tomcat端口<br>其他三个对着改就行</pre><br>5:让tomcat01，02，03，04和solr_home01，02，03，04依次关联起来</p>
+<p><pre>vim /usr/local/solr-cloud/tomcat01/webapps/solr/WEB-INF/web.xml</pre></p>
+<p> &lt;env-entry&gt;<br> &lt;env-entry-name&gt;solr/home&lt;/env-entry-name&gt;<br> &lt;env-entry-value&gt;<strong><span style="color: #ff0000;">/usr/local/solr-cloud/solr_home01</span></strong>&lt;/env-entry-value&gt;<br> &lt;env-entry-type&gt;java.lang.String&lt;/env-entry-type&gt;<br> &lt;/env-entry&gt;<br>对应去修改标红的地方<br>6：让zookeeper统一管理配置文件。需要把solr_home/collection1/conf目录上传到zookeeper。上传任意solr_home中的配置文件即可。</p>
+<p><pre><span style="color: #ff0000;">找到上传工具zkCli.sh</span><br>cd /usr/local/solr/<strong><span style="color: #ff0000;">solr-4.10.3</span></strong>/example/scripts/cloud-scripts</pre></p>
+<p><strong><span style="color: #ff0000;">千万注意 ：上传之前保证以下2点</span></strong><br>1：关闭zookeeper服务器防火墙<br>/etc/init.d/iptables stop<br>chkconfig –level 35 iptables off<br>2：开启zookeeper集群服务</p>
+<p><span style="color: #ff0000;">执行上传</span> ./zkcli.sh -zkhost 192.168.25.131:2181,192.168.25.131:2182,192.168.25.131:2183 -cmd upconfig -confdir /usr/local/solr-cloud/solr_home01/collection1/conf -confname myconf<br>7：去zookeeper中查看下是否上传成功</p>
+<p><pre>连接到192.168.25.131 服务器<br>cd /usr/local/zookeeper-cluster/zookeeper01/bin/<br>执行命令: ./zkCli.sh 连接到zookeeper服务器</pre></p>
+<p>[zk: localhost:2181(CONNECTED) 0] <span style="color: #ff0000;">ls /</span><br>[<strong><span style="color: #ff0000;">configs</span></strong>, zookeeper]<br>[zk: localhost:2181(CONNECTED) 1]<br>如果有configs证明上传成功！！！！！！<br>8：修改solr tomcat/bin目录下的catalina.sh 文件，关联solr和zookeeper。</p>
+<p><pre>  vim /usr/local/solr-cloud/tomcat01/bin/catalina.sh<br> <img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/AA-300x83.jpg" alt=""></pre></p>
+<p>添加：<br>JAVA_OPTS=”-DzkHost=192.168.25.131:2181,192.168.25.131:2182,192.168.25.131:2183”<br>其他两个tomcat同理,配完后solr tomcat集群就已经知道zookeeper集群地址了，taomcat会主动连接zookeeper，将自身信息（ip、端口）发送给zookeeper。<br>9：批处理启动每个tomcat实例。<span style="color: #ff0000;">要保证zookeeper集群是启动状态。</span></p>
+<p><pre> vim /usr/local/solr-cloud/start-tomcat-all.sh<br>添加：<br>/usr/local/solr-cloud/tomcat01/bin/startup.sh<br>/usr/local/solr-cloud/tomcat02/bin/startup.sh<br>/usr/local/solr-cloud/tomcat03/bin/startup.sh<br>/usr/local/solr-cloud/tomcat04/bin/startup.sh<br>权限<br>chmod u+x /usr/local/solr-cloud/start-tomcat-all.sh<br>启动<br>/usr/local/solr-cloud/start-tomcat-all.sh</pre><br>10:访问集群(,访问集群中其中一个tomcat即可)</p>
+<p><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/dd-300x145.png" alt=""></p>
+<p>11：创建新的Collection进行分片处理。直接在浏览器地址栏执行即可，注意修改服务器地址</p>
+<p><pre><a href="http://192.168.25.130:8180/solr/admin/collections?action=CREATE&amp;name=collection2&amp;numShards=2&amp;replicationFactor=2" target="_blank" rel="external">http://192.168.25.130:8180/solr/admin/collections?action=CREATE&amp;name=collection2&amp;numShards=2&amp;replicationFactor=2</a><br><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-30_095506-300x58.png" alt=""><br>在每个solr_home下面分别创建了新的collection<br><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-30_095654-300x59.png" alt=""></pre></p>
+<p>讨论：我访问的是tomcat01的solr，为什么其他3个solr_home也新建了新的collection？<br>答：4个tomcat间无法直接相互通讯，但是每个tomcat都能跟zookeeper通讯，其实是通过zookeeper中间层，实现每个solr_home 都能新建新的collection<br>12删除不用的Collection。</p>
+<p><pre><a href="http://192.168.25.130:8180/solr/admin/collections?action=DELETE&amp;name=collection1" target="_blank" rel="external">http://192.168.25.130:8180/solr/admin/collections?action=DELETE&amp;name=collection1</a><br>讨论：为什么一删则4个tomcat全删，怎么做到的？<br>答：还是zookeeper中间层起到统一管理作用。</pre><br>总结：通过以上配置，验证了solr集群架构</p>
+<p><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-30_100739-300x202.png" alt=""></p>
+<p>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/07/29/solr-e9-9b-86-e7-be-a4-e6-90-ad-e5-bb-ba/" data-id="cj9k57bk4001kyc8vtpw6j1t5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/07/30/spring-e6-95-b4-e5-90-88-e9-82-ae-e4-bb-b6-e5-8a-9f-e8-83-bd/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    spring整合邮件功能
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/07/29/zookeeper-e9-85-8d-e7-bd-ae-e8-af-b4-e6-98-8e/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">zookeeper配置说明</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/">JAVA_WEB</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJs/">NodeJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/未分类/">未分类</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/">dubbo</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/">fastDFS</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/solor/">solor</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端技术/">前端技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务安装/">服务安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.wendaoxueyuan.com">问道学院</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 朱锡铭<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

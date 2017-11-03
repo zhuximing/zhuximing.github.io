@@ -154,7 +154,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                4
+                34
                 <span>文章</span>
             </div>
             <div class="article-info-block">
@@ -227,7 +227,7 @@
 
 </div>
 
-    <a data-url="http://www.wendaoxueyuan.com/2017/11/04/12/" data-id="cj9k4pawx0000qd8vu0zetzdl" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://www.wendaoxueyuan.com/2017/11/04/12/" data-id="cj9k57bha0009yc8v1yt0x2ri" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -350,7 +350,7 @@
 
 </div>
 
-    <a data-url="http://www.wendaoxueyuan.com/2017/11/04/zhu/" data-id="cj9k4paz90002qd8vt2tpa5ym" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://www.wendaoxueyuan.com/2017/11/04/zhu/" data-id="cj9k57bko001yyc8vj020je8m" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -469,7 +469,7 @@
 
 </div>
 
-    <a data-url="http://www.wendaoxueyuan.com/2017/11/03/helloworld/" data-id="cj9k4paz40001qd8vc0xm2fyw" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://www.wendaoxueyuan.com/2017/11/03/helloworld/" data-id="cj9k57bji0016yc8vds8giirf" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -597,7 +597,7 @@
 
 </div>
 
-    <a data-url="http://www.wendaoxueyuan.com/2017/11/03/hello-world/" data-id="cj9k4paze0003qd8v8r62lmp1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://www.wendaoxueyuan.com/2017/11/03/hello-world/" data-id="cj9k57bjf0013yc8v4psjb5ys" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -672,18 +672,946 @@
 </article>
 
 
+
+    <article id="post-webstoragecache-api" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/08/06/webstoragecache-api/">WebStorageCache--api</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/08/06/webstoragecache-api/">
+            <time datetime="2017-08-06T05:45:46.000Z" itemprop="datePublished">2017-08-06</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><pre>说明:<br>   WebStorageCache对HTML5 localStorage和sessionStorage 进行了扩展，添加了超时时间，序列化方法。可以直接存储json对象，同时可以非常简单的进行超时时间的设置。<br> <strong>优化</strong>：WebStorageCache自动清除访问的过期数据，避免了过期数据的累积。另外也提供了清除全部过期数据的方法：wsCache.deleteAllExpires();</pre></p>
+<p><pre>资源下载和使用方法请参考：<a href="https://github.com/WQTeam/web-storage-cache" target="_blank" rel="external">https://github.com/WQTeam/web-storage-cache</a></pre><br>&nbsp;</p>
+<p>使用WebStorageCache，只要在页面上引入下面代码即可。</p>
+<div class="highlight highlight-text-html-basic"><br><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">“</span>src/web-storage-cache.js<span class="pl-pds">“</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;<br><br>&lt;<span class="pl-ent">script</span>&gt;<br><span class="pl-s1"><span class="pl-c">// 创建WebStorageCache 实例.</span></span><br><span class="pl-s1"><span class="pl-k">var</span> wsCache <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStorageCache</span>();</span><br><span class="pl-s1"><span class="pl-c">// 保存’wqteam’ 到 ‘username’, 过期时间 100 秒</span></span><br><span class="pl-s1"><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">100</span>});</span><br><span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;</pre><br></div>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><div class="highlight highlight-source-js"><br><pre><span class="pl-k">var</span> wsCache <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStorageCache</span>();<br><br><span class="pl-c">// 缓存字符串’wqteam’ 到 ‘username’ 中, 超时时间100秒</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">100</span>});<br><br><span class="pl-c">// 超时截止日期，可用使用Date类型</span><br><span class="pl-k">var</span> nextYear <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>();<br><span class="pl-smi">nextYear</span>.<span class="pl-c1">setFullYear</span>(<span class="pl-smi">nextYear</span>.<span class="pl-c1">getFullYear</span>() <span class="pl-k">+</span> <span class="pl-c1">1</span>);<br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> nextYear});<br><br><span class="pl-c">// 获取缓存中 ‘username’ 的值</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>);<br><br><span class="pl-c">// 缓存简单js对象，默认使用序列化方法为JSON.stringify。可以通过初始化wsCache的时候配置serializer.serialize</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(<span class="pl-s"><span class="pl-pds">‘</span>user<span class="pl-pds">‘</span></span>, { name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">‘</span>Wu<span class="pl-pds">‘</span></span>, organization<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>});<br><br><span class="pl-c">// 读取缓存中的简单js对象 - 默认使用反序列化方法为JSON.parse。可以通过初始化wsCache的时候配置serializer.deserialize</span><br><span class="pl-k">var</span> user <span class="pl-k">=</span> <span class="pl-smi">wsCache</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">‘</span>user<span class="pl-pds">‘</span></span>);<br><span class="pl-en">alert</span>(<span class="pl-smi">user</span>.<span class="pl-c1">name</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">‘</span> belongs to <span class="pl-pds">‘</span></span> <span class="pl-k">+</span> <span class="pl-smi">user</span>.<span class="pl-smi">organization</span>);<br><br><span class="pl-c">// 删除缓存中 ‘username’</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">delete</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>);<br><br><span class="pl-c">// 手工删除所有超时CacheItem,</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">deleteAllExpires</span>();<br><br><span class="pl-c">// 清除客户端中所有缓存</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">clear</span>();<br><br><span class="pl-c">// 为已存在的（未超时的）缓存值设置新的超时时间。</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">touch</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-c1">1</span>);<br><br><span class="pl-c">// 如果缓存中没有key为username2的缓存，则添加username2。反之什么都不做</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">add</span>(<span class="pl-s"><span class="pl-pds">‘</span>username2<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">1</span>});<br><br><span class="pl-c">// 如果缓存中有key为username的缓存，则替换为新值。反之什么都不做</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">replace</span>(<span class="pl-s"><span class="pl-pds">‘</span>username<span class="pl-pds">‘</span></span>, <span class="pl-s"><span class="pl-pds">‘</span>new wqteam<span class="pl-pds">‘</span></span>, {exp <span class="pl-k">:</span> <span class="pl-c1">1</span>});<br><br><span class="pl-c">// 检查当前选择作为缓存的storage是否被用户浏览器支持。</span><br><span class="pl-c">//如果不支持调用WebStorageCache API提供的方法将什么都不做。</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">isSupported</span>();<br></pre><br></div>
+
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a><a href="https://github.com/WQTeam/web-storage-cache#api" target="_blank" rel="external"></a>API</h1><h2 id="Constructor"><a href="#Constructor" class="headerlink" title="Constructor"></a><a href="https://github.com/WQTeam/web-storage-cache#constructor" target="_blank" rel="external"></a>Constructor</h2><div class="highlight highlight-source-js"><br><pre><span class="pl-k">var</span> wsCache <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WebStorageCache</span>({<br>    <span class="pl-c">// [可选] ‘localStorage’, ‘sessionStorage’, window.localStorage, window.sessionStorage</span><br>    <span class="pl-c">//        或者其他实现了 [Storage API] 的storage实例.</span><br>    <span class="pl-c">//        默认 ‘localStorage’.</span><br>    storage<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">‘</span>localStorage<span class="pl-pds">‘</span></span>,<br>    <span class="pl-c">// [可选]  类型Number，公共超时事件设置。默认无限大</span><br>    exp<span class="pl-k">:</span> <span class="pl-c1">Infinity</span><br>});</pre><br></div>
+
+<h2 id="isSupported"><a href="#isSupported" class="headerlink" title="isSupported"></a><a href="https://github.com/WQTeam/web-storage-cache#issupported" target="_blank" rel="external"></a>isSupported</h2><p>检查当前选择作为缓存的storage是否被用户浏览器支持。 如果不支持调用WebStorageCache API提供的方法将什么都不做。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-en">isSupported</span>(); <span class="pl-c">// 返回值Boolean。</span></pre><br></div>
+
+<h2 id="set"><a href="#set" class="headerlink" title="set"></a><a href="https://github.com/WQTeam/web-storage-cache#set" target="_blank" rel="external"></a>set</h2><p>往缓存中插入数据。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-c">// key [必填] 必须要为String类型。</span><br><span class="pl-c">// value [必填] 支持所以可以JSON.parse 的类型。注：当为undefined的时候会执行 delete(key)操作。</span><br><span class="pl-c">// options [选填] js对象，包含两个属性 exp 和 force。</span><br><span class="pl-c">// {</span><br><span class="pl-c">//     // 类型Number。超时时间，秒。默认无限大。</span><br><span class="pl-c">//     exp: 100,</span><br><span class="pl-c">//     // 类型Boolean。为true时：当超过最大容量导致无法继续插入数据操作时，先清空缓存中已超时的</span><br><span class="pl-c">//     // 内容后再尝试插入数据操作。默认为true。</span><br><span class="pl-c">//     force: true</span><br><span class="pl-c">// }</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">set</span>(key, value, options);</pre><br></div>
+
+<h2 id="get"><a href="#get" class="headerlink" title="get"></a><a href="https://github.com/WQTeam/web-storage-cache#get" target="_blank" rel="external"></a>get</h2><p>根据key获取缓存中未超时数据。返回相应类型String、Boolean、PlainObject、Array的值。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-c">// key [必填] String类型。如果发现该key对应的值已过期,会进行delete(key)操作，返回null。</span><br><span class="pl-smi">wsCache</span>.<span class="pl-c1">get</span>(key);</pre><br></div>
+
+<h2 id="delete"><a href="#delete" class="headerlink" title="delete"></a><a href="https://github.com/WQTeam/web-storage-cache#delete" target="_blank" rel="external"></a>delete</h2><p>根据key删除缓存中的值。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">delete</span>(key);</pre><br></div>
+
+<h2 id="deleteAllExpires"><a href="#deleteAllExpires" class="headerlink" title="deleteAllExpires"></a><a href="https://github.com/WQTeam/web-storage-cache#deleteallexpires" target="_blank" rel="external"></a>deleteAllExpires</h2><p>删除缓存中所有通过WebStorageCache存储的超时值。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-en">deleteAllExpires</span>();</pre><br></div>
+
+<h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a><a href="https://github.com/WQTeam/web-storage-cache#clear" target="_blank" rel="external"></a>clear</h2><p>清空缓存中全部的值。注意：这个方法会清除不是使用WebStorageCache插入的值。推荐使用:<code>deleteAllExpires</code>。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">clear</span>();</pre><br></div>
+
+<h2 id="touch"><a href="#touch" class="headerlink" title="touch"></a><a href="https://github.com/WQTeam/web-storage-cache#touch" target="_blank" rel="external"></a>touch</h2><p>根据key为已存在的（未超时的）缓存值以当前时间为基准设置新的超时时间。</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-c">// key [必填] String类型</span><br><span class="pl-c">// exp [必填] number 单位：秒 js对象包含exp属性（以当前时间为起点的新的超时时间）</span><br><span class="pl-smi">wsCache</span>.<span class="pl-en">touch</span>(key, exp<span class="pl-k">:</span> <span class="pl-c1">1</span>);</pre><br></div>
+
+<h2 id="add"><a href="#add" class="headerlink" title="add"></a><a href="https://github.com/WQTeam/web-storage-cache#add" target="_blank" rel="external"></a>add</h2><p>根据key做插入操作，如果key对应的值不存在或者已超时则插入该值，反之什么都不做。 注：不是通过WebStorageCache插入的值也会当作失效的值，依然执行<code>add</code>操作</p>
+<div class="highlight highlight-source-js"><br><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">add</span>(key, value, options);</pre><br></div>
+
+<h2 id="replace"><a href="#replace" class="headerlink" title="replace"></a><a href="https://github.com/WQTeam/web-storage-cache#replace" target="_blank" rel="external"></a>replace</h2><p>根据key做插入操作，如果key对应的值存在并且未超时则插入该值，反之什么都不做<br>注：超时时间以当前时间为基准重新设置。</p>
+<p><div class="highlight highlight-source-js"></div></p>
+<p><pre><span class="pl-smi">wsCache</span>.<span class="pl-c1">replace</span>(key, value, options);</pre><br><br>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/08/06/webstoragecache-api/" data-id="cj9k57bkc001ryc8vdmkwweaq" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-dubbo-e6-9c-8d-e5-8a-a1-e6-80-8e-e4-b9-88-e8-bf-90-e8-a1-8c-e8-ae-a8-e8-ae-ba" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/08/03/dubbo-e6-9c-8d-e5-8a-a1-e6-80-8e-e4-b9-88-e8-bf-90-e8-a1-8c-e8-ae-a8-e8-ae-ba/">Dubbo服务怎么运行--讨论</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/08/03/dubbo-e6-9c-8d-e5-8a-a1-e6-80-8e-e4-b9-88-e8-bf-90-e8-a1-8c-e8-ae-a8-e8-ae-ba/">
+            <time datetime="2017-08-03T06:44:19.000Z" itemprop="datePublished">2017-08-03</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/dubbo/">dubbo</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>1：使用servlet容器如（tomcat、jetty）运行</p>
+<p><pre>dubbo服务容器是一个standalone启动程序，Tomcat或者jboss等web容器去加载服务提供方，增加了复杂性（增加了端口、管理复杂），也浪费资源（tomcat启动本身占用内存资源）。<br><span style="color: #ff0000;">可行不可取（开发阶段为了测试方便可以用用）</span></pre><br>2：自写Main方法加载spring容器从而启动dubbo服务</p>
+<p><pre>ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(path)<br>缺点：<br>1：dubbo本身提供的高级特性没用上<br>2：自己写的启动类会存在一些缺陷（无法优雅关机）<br><span style="color: #ff0000;">本地测试时可用</span></pre><br>3:使用dubbo框架提供的main方法来运行spring容器</p>
+<p><pre>优点:<br>1：框架提供（com.alibaba.dubbo.container.Main）<br>2:可以优雅关机(ShutdownHook)<br><span style="color: #000000;"><strong>优雅停机的好处：</strong></span><br><span style="color: #ff0000;"><strong>对于服务提供方：</strong></span><br>停止时，先标记为不接收新请求，新请求过来时直接报错，让客户端重试其它机器。<br>然后，检测线程池中的线程是否正在运行，如果有，等待所有线程执行完成，除非超时，则强制关闭。<br><strong><span style="color: #ff0000;">对于服务消费方：<br></span></strong><span style="color: #ff0000;"><span style="color: #000000;">停止时，不再发起新的调用请求，所有新的调用在客户端即报错。</span></span><span style="color: #ff0000;"><span style="color: #000000;"><br>然后，检测有没有请求的响应还没有返回，等待响应返回，除非超时，则强制关闭。</span></span><br><strong>注意：</strong>Dubbo 是通过 JDK 的 ShutdownHook 来完成优雅停机的，所以如果用户使用 kill -9 pid 等强制关闭指令，是不会执行优雅停机的，只有通过 kill pid 时，才会执行。</pre><br>怎么实现优雅停机呢？</p>
+<p>4:com.alibaba.dubbo.container.Main对构建后的目录有要求，而不是maven默认的构建方式</p>
+<p><pre>maven默认的构建jar包方式<br><img src="http://139.199.74.187/blog/wp-content/uploads/2017/08/2017-08-09_141942-300x151.png" alt=""><br>1————&gt;src/main/java<br>2————-&gt;src/main/resources</pre></p>
+<p><pre>com.alibaba.dubbo.container.Main希望构建成这样<br><img src="http://139.199.74.187/blog/wp-content/uploads/2017/08/2017-08-09_153929-300x154.png" alt=""><br>将您的项目 maven -install 后你会发现工程目录下有个target，target下面有lib和对应的jar</pre></p>
+<p>同时 taotao-manager-service.jar 结构如下图<br><img src="http://139.199.74.187/blog/wp-content/uploads/2017/08/2017-08-09_154445-300x165.png" alt=""> <img src="http://139.199.74.187/blog/wp-content/uploads/2017/08/2017-08-09_154515-300x158.png" alt=""> <img src="http://139.199.74.187/blog/wp-content/uploads/2017/08/2017-08-09_154537-300x122.png" alt=""></p>
+<p>看到没有spring的配置文件放到META-INF—&gt;spring文件夹下，为什么放到这里来，是因为com.alibaba.dubbo.container.Main程序就是到这里面去找的，不这么放不行.<br>怎么才能构建成上面那个鬼样子呢？这时候就需要在pom.xml中使用一些插件</p>
+<p><pre>&lt;build&gt;<br> &lt;!– 处理配置文件 –&gt;<br> &lt;resources&gt;<br> &lt;resource&gt;<br><span style="color: #ff0000;"> &lt;targetPath&gt;${project.build.directory}/classes&lt;/targetPath&gt;</span><br><span style="color: #ff0000;"> &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br> &lt;filtering&gt;true&lt;/filtering&gt;<br> &lt;includes&gt;<br> &lt;include&gt;<strong>/*&lt;/include&gt;<br> &lt;/includes&gt;<br> &lt;/resource&gt;<br> &lt;!– com.alibaba.dubbo.container.Main默认到/classes/META-INF/spring读取spring配置文件 –&gt;<br> &lt;resource&gt;<br> <span style="color: #ff0000;">&lt;targetPath&gt;${project.build.directory}/classes/META-INF/spring&lt;/targetPath&gt;</span><br><span style="color: #ff0000;"> &lt;directory&gt;src/main/resources/spring&lt;/directory&gt;</span><br> &lt;filtering&gt;true&lt;/filtering&gt;<br> &lt;includes&gt;<br> &lt;include&gt;</strong>/*&lt;/include&gt;<br> &lt;/includes&gt;<br> &lt;/resource&gt;<br> &lt;/resources&gt;<br> &lt;!– 处理依赖的jar包 –&gt;<br> &lt;plugins&gt;<br> &lt;plugin&gt;<br> &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;<br> &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;<br> &lt;executions&gt;<br> &lt;execution&gt;<br> &lt;id&gt;copy-dependencies&lt;/id&gt;<br> &lt;phase&gt;package&lt;/phase&gt;<br> &lt;goals&gt;<br> &lt;goal&gt;copy-dependencies&lt;/goal&gt;<br> &lt;/goals&gt;<br> &lt;configuration&gt;<br> &lt;type&gt;jar&lt;/type&gt;<br> &lt;includeTypes&gt;jar&lt;/includeTypes&gt;<br> &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt;<br> &lt;outputDirectory&gt;<br> <span style="color: #ff0000;">${project.build.directory}/lib</span><br> &lt;/outputDirectory&gt;<br> &lt;/configuration&gt;<br> &lt;/execution&gt;<br> &lt;/executions&gt;<br> &lt;/plugin&gt;</pre></p>
+<p> &lt;!– 打包jar文件时，配置manifest文件，告诉我的主程序依赖jar在哪里 –&gt;<br> &lt;plugin&gt;<br> &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;<br> &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;<br> &lt;configuration&gt;<br> &lt;classesDirectory&gt;target/classes/&lt;/classesDirectory&gt;<br> &lt;archive&gt;<br> &lt;manifest&gt;<br> &lt;mainClass&gt;com.alibaba.dubbo.container.Main&lt;/mainClass&gt;<br> &lt;!– 打包时 MANIFEST.MF文件不记录的时间戳版本 –&gt;<br> &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt;<br> &lt;addClasspath&gt;true&lt;/addClasspath&gt;<br> <span style="color: #ff0000;">&lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt;</span><br> &lt;/manifest&gt;<br> &lt;manifestEntries&gt;<br> &lt;Class-Path&gt;.&lt;/Class-Path&gt;<br> &lt;/manifestEntries&gt;<br> &lt;/archive&gt;<br> &lt;/configuration&gt;<br> &lt;/plugin&gt;</p>
+<p> &lt;/plugins&gt;<br> &lt;pluginManagement&gt;<br> &lt;plugins&gt;<br> &lt;!– 解决Maven插件在Eclipse内执行了一系列的生命周期引起冲突 –&gt;<br> &lt;plugin&gt;<br> &lt;groupId&gt;org.eclipse.m2e&lt;/groupId&gt;<br> &lt;artifactId&gt;lifecycle-mapping&lt;/artifactId&gt;<br> &lt;version&gt;1.0.0&lt;/version&gt;<br> &lt;configuration&gt;<br> &lt;lifecycleMappingMetadata&gt;<br> &lt;pluginExecutions&gt;<br> &lt;pluginExecution&gt;<br> &lt;pluginExecutionFilter&gt;<br> &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;<br> &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;<br> &lt;versionRange&gt;[2.0,)&lt;/versionRange&gt;<br> &lt;goals&gt;<br> &lt;goal&gt;copy-dependencies&lt;/goal&gt;<br> &lt;/goals&gt;<br> &lt;/pluginExecutionFilter&gt;<br> &lt;action&gt;<br> &lt;ignore /&gt;<br> &lt;/action&gt;<br> &lt;/pluginExecution&gt;<br> &lt;/pluginExecutions&gt;<br> &lt;/lifecycleMappingMetadata&gt;<br> &lt;/configuration&gt;<br> &lt;/plugin&gt;<br> &lt;/plugins&gt;<br> &lt;/pluginManagement&gt;<br> &lt;/build&gt;<br>有了这些插件，你构建出来的项目就是不一样，就能让com.alibaba.dubbo.container.Main去启动你的dubbo服务，那么怎么启动呢？</p>
+<p><pre>很简单，把你的lib和你的taotao-manager-service.jar当作一个整体，放到一个目录下通过如下命令启动<br>java -jar taotao-manager-service.jar &amp;<br><span style="color: #ff0000;">注意：需要配置java环境变量哦</span></pre><br>以上就实现了通过dubbo的Main实现优雅停机，当然你还可以设置优雅停机超时时间</p>
+<p><pre><span class="hljs-tag">&lt;<span class="hljs-name">dubbo:application</span> &gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dubbo:parameter</span> <span class="hljs-attr">key</span>=<span class="hljs-string">“shutdown.timeout”</span> <span class="hljs-attr">value</span>=<span class="hljs-string">“60000”</span> /&gt;</span> <span class="hljs-comment">&lt;!– 单位毫秒 –&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dubbo:application</span>&gt;</span></pre><br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/08/03/dubbo-e6-9c-8d-e5-8a-a1-e6-80-8e-e4-b9-88-e8-bf-90-e8-a1-8c-e8-ae-a8-e8-ae-ba/" data-id="cj9k57bkr0021yc8vz2wel10d" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-nginx-e5-ae-89-e8-a3-85" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/08/03/nginx-e5-ae-89-e8-a3-85/">nginx安装</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/08/03/nginx-e5-ae-89-e8-a3-85/">
+            <time datetime="2017-08-03T03:06:41.000Z" itemprop="datePublished">2017-08-03</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/nginx/">nginx</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>1:上传nginx源码包（nginx-1.8.0.tar.gz）</p>
+<p>2:搭建nginx编译环境</p>
+<pre>因为nginx是c语言开发，所以需要gcc环境,先检测gcc是否已经安装
+gcc -v
+如果没有gcc环境，需要安装gcc：
+yum install gcc-c++
+</pre>
+3:除了gcc环境还需要安装第三方开发包
+<pre>**PCRE**
+   PCRE(Perl Compatible Regular Expressions)是一个Perl库，包括 perl 兼容的正则表达式库。nginx的http模块使用pcre来解析正则表达式，所以需要在linux上安装pcre库。
+<span style="color: #ff0000;">**yum install -y pcre pcre-devel**</span>
+**<span style="color: #ff0000;">注意</span>**：pcre-devel是使用pcre开发的一个二次开发库。nginx也需要此库。</pre>
+
+<hr>
+<pre>**zlib**
+    zlib库提供了很多种压缩和解压缩的方式，nginx使用zlib对http包的内容进行gzip，所以需要在linux上安装zlib库。
+<span style="color: #ff0000;">**yum install -y zlib zlib-devel**</span></pre>
+
+<hr>
+<p><pre><br><strong>openssl
+</strong>       OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。  nginx不仅支持http协议，还支持https（即在ssl协议上传输http），所以需要在linux安装openssl库。<br><span style="color: #ff0000;"><strong>yum install -y openssl openssl-devel</strong></span></pre></p>
+<p><br>4：解压nginx缩源码包</p>
+<p><pre>[root@localhost ~]# tar -zxvf nginx-1.8.0.tar.gz -C /usr/local/</pre><br>5：生成makefile文件</p>
+<p><pre>cd /usr/local/nginx-1.8.0<br>./configure \<br>–prefix=<span style="color: #ff0000;">/usr/local/nginx</span> \<br>–pid-path=/var/run/nginx/nginx.pid \<br>–lock-path=/var/lock/nginx.lock \<br>–error-log-path=/var/log/nginx/error.log \<br>–http-log-path=/var/log/nginx/access.log \<br>–with-http_gzip_static_module \<br>–http-client-body-temp-path=<span style="color: #ff0000;">/var/temp/nginx/</span>client \<br>–http-proxy-temp-path=<span style="color: #ff0000;">/var/temp/nginx</span>/proxy \<br>–http-fastcgi-temp-path=<span style="color: #ff0000;">/var/temp/nginx</span>/fastcgi \<br>–http-uwsgi-temp-path=<span style="color: #ff0000;">/var/temp/nginx</span>/uwsgi \<br>–http-scgi-temp-path=<span style="color: #ff0000;">/var/temp/nginx</span>/scgi<br>执行完你会发现在nginx-1.8.0文件夹下多出一个Makefile文件</pre><br>6：编译安装</p>
+<p><pre>cd /usr/local/nginx-1.8.0<br><span style="color: #ff0000;">make</span><br><span style="color: #ff0000;">make  install<br><span style="color: #0000ff;">安装完后在/usr/local下面你会发现编译安装好的nginx文件夹</span></span></pre><br>7:启动</p>
+<p><pre><strong><span style="color: #ff0000;">注意</span>：
+</strong>第5步将临时文件目录指定为/var/temp/nginx，需要在/var下创建temp及nginx目录<br>mkdir <span style="color: #ff0000;">-p</span> /var/temp/nginx<br>启动:<br>/usr/local/nginx/sbin/nginx<br></pre><br>8:查看服务器</p>
+<p><pre>查看进程：<br>ps aux|grep nginx<br>在浏览器中查看nginx服务器(注意先关闭防火墙)<br>/etc/init.d/iptables stop<br>chkconfig –level 35 iptables off</pre></p>
+<p><a href="http://192.168.25.135/看到欢迎界面代表安装成功！！" target="_blank" rel="external">http://192.168.25.135/看到欢迎界面代表安装成功！！</a><br><br>9：关闭nginx</p>
+<p><pre>/usr/local/nginx/sbin/nginx -s stop</pre><br>10:在不重启nginx的情况下，动态刷新nginx配置</p>
+<p><pre>/usr/local/nginx/sbin/nginx -s reload</pre></p>
+<p>当修改配置文件，无须再重启只需执行以上命令即可<br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/08/03/nginx-e5-ae-89-e8-a3-85/" data-id="cj9k57bj9000zyc8vooodexe1" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-dubbo-e7-ae-a1-e6-8e-a7-e5-8f-b0-e8-bf-9e-e6-8e-a5-e9-9b-86-e7-be-a4" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/08/02/dubbo-e7-ae-a1-e6-8e-a7-e5-8f-b0-e8-bf-9e-e6-8e-a5-e9-9b-86-e7-be-a4/">Dubbo管控台连接集群</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/08/02/dubbo-e7-ae-a1-e6-8e-a7-e5-8f-b0-e8-bf-9e-e6-8e-a5-e9-9b-86-e7-be-a4/">
+            <time datetime="2017-08-02T11:56:24.000Z" itemprop="datePublished">2017-08-02</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/dubbo/">dubbo</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>前提：<a href="http://139.199.74.187/blog/?p=36" target="_blank" rel="external">搭建java运行环境</a></p>
+<p>1:上传tomcat和dubbo-admin-2.5.4.war上传到服务器(如果已经上传请飘过)</p>
+<p>2:解压解压tomcat到 /usr/local/control目录下</p>
+<pre>mkdir -p /usr/local/dubbo-control
+[root@localhost ~]#  tar -zxvf apache-tomcat-7.0.47.tar.gz -C /usr/local/dubbo-control</pre>
+3:在生产环境一般都要清除webapps下面所有的文件
+<pre>rm -rf /usr/local/dubbo-control/apache-tomcat-7.0.47/webapps/*</pre>
+4:将dubbo-admin-2.5.4.war拷贝到 /usr/local/dubbo-control/apache-tomcat-7.0.47
+<pre>[root@localhost ~]# cp dubbo-admin-2.5.4.war /usr/local/dubbo-control/apache-tomcat-7.0.47/webapps/</pre>
+5:解压dubbo-admin-2.5.4.war包并报目录命名为ROOT
+<pre>unzip /usr/local/dubbo-control/apache-tomcat-7.0.47/webapps/dubbo-admin-2.5.4.war -d ROOT</pre>
+6:配置dubbo.properties
+<pre>vim /usr/local/dubbo-control/apache-tomcat-7.0.47/webapps/ROOT/WEB-INF/dubbo.properties
+
+dubbo.registry.address=zookeeper://<span style="color: #ff0000;">127.0.0.1:2181</span>?backup=<span style="color: #ff0000;">127.0.0.1:2182</span>,<span style="color: #ff0000;">127.0.0.</span>
+<span style="color: #ff0000;">1:2183</span>
+dubbo.admin.root.password=<span style="color: #ff0000;">zhu.123    </span>
+dubbo.admin.guest.password=guest
+**<span style="color: #ff0000;">说明:</span>**
+1:如果dubbo管控台和zookeeper不在同一台电脑，那么ip地址要为zookeeper真实ip地址
+2:建议修改管控台密码</pre>
+7:启动tomcat
+<pre>启动之前确保zookeeper集群已经启动
+/usr/local/dubbo-control/apache-tomcat-7.0.47/bin/startup.sh</pre>
+8:访问管控台
+<pre>访问之前确保防火墙已经关闭
+<span style="color: #ff0000;">/etc/init.d/iptables stop</span>
+<span style="color: #ff0000;">chkconfig --level 35 iptables off</span>
+http://192.168.25.131:8080/</pre>
+9:代码怎么链接到zookeeper集群
+<pre>&lt;!-- 服务注册到目标zookeeper --&gt;
+ &lt;dubbo:registry protocol="zookeeper" address="<span style="color: #ff0000;">192.168.25.131:2181,192.168.25.131:2182,192.168.25.131:2183</span>" /&gt;</pre>
+<pre>10：验证zookeeper集群是否高可用关掉一个zookeeper看对系统有没有影响</pre>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/08/02/dubbo-e7-ae-a1-e6-8e-a7-e5-8f-b0-e8-bf-9e-e6-8e-a5-e9-9b-86-e7-be-a4/" data-id="cj9k57bi8000myc8vdfez9dhz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-activemq-e6-9c-8d-e5-8a-a1-e5-99-a8-e5-ae-89-e8-a3-85" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/07/31/activemq-e6-9c-8d-e5-8a-a1-e5-99-a8-e5-ae-89-e8-a3-85/">ActiveMQ服务器安装</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/31/activemq-e6-9c-8d-e5-8a-a1-e5-99-a8-e5-ae-89-e8-a3-85/">
+            <time datetime="2017-07-31T04:21:18.000Z" itemprop="datePublished">2017-07-31</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/消息队列（activeMQ）/">消息队列（activeMQ）</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>前提：搭建java运行环境，请参考<a href="http://139.199.74.187/blog/?p=36" target="_blank" rel="external">centos配置java环境</a></p>
+<p>1：上传压缩包到centos（apache-activemq-5.12.0-bin.tar.gz）</p>
+<p><pre>tar -zxvf apache-activemq-5.12.0-bin.tar.gz -C /usr/local</pre><br>2：启动</p>
+<p><pre>/usr/local/apache-activemq-5.12.0/bin/activemq start</pre></p>
+<p><span style="color: #ff00ff;">管理后台端口：8161   通过<a href="http://192.168.25.134:8161访问" target="_blank" rel="external">http://192.168.25.134:8161访问</a></span></p>
+<p><span style="color: #ff0000;">注意：关闭防火墙<br>/etc/init.d/iptables stop<br>chkconfig –level 35 iptables off</span></p>
+<p><span style="color: #ff00ff;">服务器端口：61616 通过activemq-all-5.11.2.jar在程序中访问</span><br>3：修改管理后台登陆密码</p>
+<p><pre>vim /usr/local/apache-activemq-5.12.0/conf/jetty-realm.properties<br>在文件最后对着改</pre></p>
+<p>用户名   密码    角色<br><span style="color: #99cc00;">zhu:  zhu.123,  admin</span><br><span style="color: #99cc00;">user:  user,   user</span></p>
+<p><span style="color: #ff0000;">修改完后，重启avtiveMQ服务器  /usr/local/apache-activemq-5.12.0/bin/activemq restart</span><br>4:安全配置（发队列消息权限验证）</p>
+<p><pre><span style="color: #ff0000;">说明：</span>如果不做安全配置，会导致任何人都可以往mq中发消息<br>vim /usr/local/apache-activemq-5.12.0/conf/activemq.xml </pre></p>
+<p>加上如下内容：<br>&lt;plugins&gt;<br> &lt;simpleAuthenticationPlugin&gt;<br>  &lt;users&gt;<br>    &lt;authenticationUser username=”<span style="color: #ff0000;">zhu</span>“ password=”<span style="color: #ff0000;">zhu.123</span>“ groups=”users,admins”&gt; <span style="color: #ff0000;">&lt;/authenticationUser&gt;</span><br>    &lt;authenticationUser username=”user” password=”password” groups=”users”/&gt;        &lt;/authenticationUser&gt;<br>    &lt;authenticationUser username=”guest” password=”password” groups=”guests”/&gt;<br><span style="color: #ff0000;">   &lt;/authenticationUser&gt;</span><br>  &lt;/users&gt;<br> &lt;/simpleAuthenticationPlugin&gt;<br>&lt;/plugins&gt;</p>
+<p>添加后的效果图，看图确保添加到正确的地方</p>
+<p><img src="http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-31_132455-300x87.png" alt=""></p>
+<p></p>
+<p><div class="container"></div><br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/07/31/activemq-e6-9c-8d-e5-8a-a1-e5-99-a8-e5-ae-89-e8-a3-85/" data-id="cj9k57bhe000ayc8vuit5so23" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-activemq-e7-ae-80-e4-bb-8b" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/07/31/activemq-e7-ae-80-e4-bb-8b/">ActiveMQ简介</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/07/31/activemq-e7-ae-80-e4-bb-8b/">
+            <time datetime="2017-07-31T01:46:29.000Z" itemprop="datePublished">2017-07-31</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/未分类/">未分类</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/未分类/消息队列（activeMQ）/">消息队列（activeMQ）</a>
+    </div>
+
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p><strong>消息中间件</strong>：在分布式系统中，完成消息的发送和接收的基础软件，在分布式系统中起着非常重要的作用。</p>
+<pre>通过消息中间件，可以让应用程序间实现可靠的异步通讯，从而降低系统间的耦合度
+![](http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-31_101838-300x164.png)
+如果应用程序A直接调用应用程序B，要么导入B的jar 要么导入B的接口，无论哪一种A和B耦合在一起。通过消息中间件，A和B实现完全解耦，A甚至都不知道B的存在</pre>
+<pre>实际场景
+
+![](http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-31_100455-300x164.png)
+<span style="color: #ff0000;">图2是传统架构，传统架构弊端</span>
+1：交易服务依赖其他多个服务接口，耦合度高。
+2：如果其他服务是串行化调用，耗时长，长时间占用线程，导致其他用户无法进入系统，即使每个服务通过启动新线程执行，线程多了，系统性能也不好。
+<span style="color: #ff0000;">图3引入消息中间件，架构优点：</span>
+1：交易服务与其他服务完全解耦
+2：交易服务不会出现线程阻塞
+3：其他服务几乎可以并行执行，效率高</pre>
+<pre>JMS:是javaEE中关于消息的规范，是一套与具体平台无关的api，跟jdbc类似。
+![](http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-31_104635-300x90.png)
+javaEE规范了这套接口，activeMQ、rabbitMQ根据接口做了具体的实现</pre>
+JMS消息模型
+<pre>1：点对点或者队列模型
+![](http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-31_105110-300x103.png)
+生产者可以多个，消费者可以多个，但是对于一条具体消息来说，永远只有一个生产者和一个消费者
+一条消息一旦被某个消费者消化掉，其他消费者不可能再消化同一条消息。
+
+2:发布者/订阅者模型
+![](http://139.199.74.187/blog/wp-content/uploads/2017/07/2017-07-31_105443-300x98.png)
+对于一条具体某个主题，可能存在多个消费者同时消费，只要改消费者订阅了该主题，有点广播的意思</pre>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://www.wendaoxueyuan.com/2017/07/31/activemq-e7-ae-80-e4-bb-8b/" data-id="cj9k57bhs000eyc8vkl9d73eo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <nav id="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    </nav>
 </section>
             
                 
 <aside id="sidebar">
    
         
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/">JAVA_WEB</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA-WEB/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/NodeJs/">NodeJs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/未分类/">未分类</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/">dubbo</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/dubbo/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/">fastDFS</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/fastDFS/未分类/">未分类</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/solor/">solor</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端技术/">前端技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务安装/">服务安装</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/消息队列（activeMQ）/">消息队列（activeMQ）</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
     
         
     <div class="widget-wrap">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">6</span></li></ul>
         </div>
     </div>
 
